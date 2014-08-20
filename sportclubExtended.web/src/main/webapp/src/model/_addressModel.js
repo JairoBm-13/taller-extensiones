@@ -33,8 +33,7 @@ define([], function() {
  
 		 'street' : '' ,  
 		 'aveneu' : '' ,  
-		 'cityId' : '' ,
-                 'country' : ''},
+		 'cityId' : '' },
         initialize: function() {
           var self = this;
           this.on('invalid',function(error){

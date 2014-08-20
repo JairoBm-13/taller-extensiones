@@ -31,6 +31,20 @@ define(['controller/_stadiumController','delegate/stadiumDelegate'], function() 
     App.Controller.StadiumController = App.Controller._StadiumController.extend({
         language: function(){
             alert('Usted está viendo la versión en ESPAÑOL de esta página');
+        },
+        capacity : function(params){
+            var mensaje = "";
+            var exp = params.cap;
+            if(exp <=200){
+                mensaje = "El estadio es mini";
+            }
+            else if(exp > 200 && exp <= 600){
+                mensaje = "El estadio es medio";
+            }
+            else if( exp >= 601){
+                mensaje = "El estadio es grande";
+            }
+            alert(mensaje);
         }
     });
     return App.Controller.StadiumController;

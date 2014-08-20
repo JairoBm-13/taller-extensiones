@@ -45,7 +45,11 @@ define(['component/_CRUDComponent', 'controller/toolbarController', 'model/toolb
             });
             this.toolbarModel.set('saveName', 'Guardar');
             this.toolbarModel.set('cancelName','Cancelar');
+             Backbone.on(self.componentId + '-stadium-cap',function(params) {
+                self.componentController.capacity(params);
+            });
         }
+       
     });
     return App.Component.StadiumComponent;
 });

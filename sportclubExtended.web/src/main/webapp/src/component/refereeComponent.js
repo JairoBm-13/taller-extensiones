@@ -45,6 +45,9 @@ define(['component/_CRUDComponent', 'controller/toolbarController', 'model/toolb
             });
             this.toolbarModel.set('saveName', 'Guardar');
             this.toolbarModel.set('cancelName','Cancelar');
+            Backbone.on(self.componentId + '-referee-exp',function(params) {
+                self.componentController.exp(params);
+            });
         }
     });
     return App.Component.RefereeComponent;

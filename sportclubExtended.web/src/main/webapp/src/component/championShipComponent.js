@@ -45,6 +45,12 @@ define(['component/_CRUDComponent', 'controller/toolbarController', 'model/toolb
             });
             this.toolbarModel.set('saveName', 'Guardar');
             this.toolbarModel.set('cancelName','Cancelar');
+            Backbone.on(self.componentId + '-championship-show-lenght',function(params) {
+                self.componentController.duracion(params);
+            });
+            Backbone.on(self.componentId + '-championship-show-cost',function(params) {
+                self.componentController.costo(params);
+            });
         }
     });
     return App.Component.ChampionShipComponent;

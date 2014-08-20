@@ -42,7 +42,7 @@ define(['model/_addressModel'], function() {
             if(attrs.street.length > 3 || attrs.avenue.length > 3){
                 validationMessage += "La longitud de street y avenue debe ser maximo 3. \n";
             }
-            if(!attrs.country){
+            if(attrs.cityID === 0){
                 validationMessage += "Especifique el pais. \n";
             }
             if(validationMessage.length>0){

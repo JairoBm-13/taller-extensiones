@@ -45,6 +45,9 @@ define(['component/_CRUDComponent', 'controller/toolbarController', 'model/toolb
             });
             this.toolbarModel.set('saveName', 'Guardar');
             this.toolbarModel.set('cancelName','Cancelar');
+            Backbone.on(self.componentId + '-sport-show-average', function(params) {
+                self.componentController.average(params);
+            });
         }
     });
     return App.Component.SportComponent;

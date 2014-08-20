@@ -31,6 +31,11 @@ define(['controller/_sportController','delegate/sportDelegate'], function() {
     App.Controller.SportController = App.Controller._SportController.extend({
         language: function(){
             alert('Usted está viendo la versión en ESPAÑOL de esta página');
+        },
+        average: function(params){
+            var avg = ((parseInt(params.maxAge) + parseInt(params.minAge)) / 2);
+            console.log(params.deporte);
+            alert('El promedio de edad de ' +params.deporte+' es: ' + avg);
         }
     });
     return App.Controller.SportController;
