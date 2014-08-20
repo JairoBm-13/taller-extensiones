@@ -31,6 +31,62 @@ define(['controller/_memberController','delegate/memberDelegate'], function() {
     App.Controller.MemberController = App.Controller._MemberController.extend({
         language: function(){
             alert('Usted está viendo la versión en ESPAÑOL de esta página');
+        },
+        postInit: function(options) {
+            var self = this;
+            this.listEdadTemplate = _.template($('#memberEdadList').html());
+            this.listEdadModelClass = options.listModelClass;
+        },
+        _renderEdad: function() {
+            var self = this;
+            this.$el.slideUp("fast", function() {
+ 
+                self.$el.html(self.listEdadTemplate({members: self.memberEdadModelList.models}));
+                self.$el.slideDown("fast");
+            });
+        },
+        memberEdad: function(params) {
+            if (params) {
+                var data = params.data;
+            }
+            if (App.Utils.eventExists(this.componentId + '-' + 'instead-member-list')) {
+                Backbone.trigger(this.componentId + '-' + 'instead-member-list', {view: this, data: data});
+            } else {
+                Backbone.trigger(this.componentId + '-' + 'pre-member-list', {view: this, data: data});
+                var self = this;
+                if (!this.memberModelList) {
+                    this.memberModelList = new this.listModelClass();
+                }
+                this.memberModelList.fetch({
+                    data: data,
+                    success: function() {
+                        var elementos = self.memberModelList.models;
+                        self.memberEdadModelList = new App.Model.MemberEdadList;
+                        _.each(elementos, function(d) {
+                            //Se hace el cálculo del nuevo campo
+                            var actual = new Date();
+                            var nacido = d.attributes.birthDate.split("/)");
+                            var edad = actual.getFullYear()-nacido[2];
+                            if(actual.getMonth()===nacido[1]){
+                                if(actual.getDay() < nacido[0]){
+                                    edad -= 1;
+                                }
+                            }
+                            else if(actual.getMonth()+1 < nacido[1]){
+                                edad -= 1;
+                            }
+                            var model = new App.Model.MemberEdadModel({name: d.attributes.name, age: edad});
+                            self.memberEdadModelList.models.push(model);
+                        });
+                        //Se invoca la función de renderizado para que muestre los resultados en la nueva lista.
+                        self._renderEdad(params);
+                        Backbone.trigger(self.componentId + '-' + 'post-member-list', {view: self});
+                    },
+                    error: function(mode, error) {
+                        Backbone.trigger(self.componentId + '-' + 'error', {event: 'member-list', view: self, error: error});
+                    }
+                });
+            }
         }
     });
     return App.Controller.MemberController;

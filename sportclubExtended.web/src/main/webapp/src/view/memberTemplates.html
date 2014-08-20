@@ -1,4 +1,4 @@
-<script type="text/template" id="memberList">
+<script type="text/template" id="memberEdadList">
     <div class="panel panel-default">
     <!-- Default panel contents -->
     <table class="table striped">
@@ -99,3 +99,32 @@
     </form>
     </div>
 </script> 
+
+<script type="text/template" id="memberEdadList">
+    <div class="panel panel-default">
+    <table class="table striped">
+    <thead>
+    <tr>
+         <th>Nombre</th>
+         <th>Edad</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% _.each(sports, function(member) { %>
+    <% if(htmlEncode(member.getDisplay('age'))< 18) {%>
+        <tr class='info'>
+                <td><%= htmlEncode(member.getDisplay('name')) %></td>
+                <td><%= htmlEncode(member.getDisplay('age')) %></td>
+        </tr>
+    <% } %>
+    <% else { %>
+        <tr>
+                <td><%= htmlEncode(member.getDisplay('name')) %></td>
+                <td><%= htmlEncode(member.getDisplay('age')) %></td>
+        </tr>
+    <% } %>
+    <% }); %>
+    </tbody>
+    </table>
+    </div>
+</script>
